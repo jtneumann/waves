@@ -52,3 +52,10 @@ up to date in 1.196s
 fixed 0 of 1 vulnerability in 374 scanned packages
   1 package update for 1 vuln involved breaking changes
   (use `npm audit fix --force` to install breaking changes; or do it by hand)
+  
+  
+GIT INIT then ADD warning:
+	warning: LF will be replaced by CRLF in package-lock.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in package.json.
+The file will have its original line endings in your working directory.

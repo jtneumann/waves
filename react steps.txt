@@ -1,0 +1,30 @@
+Steps to Reproduce
+(Write your steps here:)
+
+npm install -g create-react-app
+log->
+C:\Users\chacker\my-react-app>npm install -g create-react-app
+C:\Users\chacker\AppData\Roaming\npm\create-react-app -> C:\Users\chacker\AppData\R
+aming\npm\node_modules\create-react-app\index.js
+C:\Users\chacker\AppData\Roaming\npm
+`-- create-react-app@1.4.3
+create-react-app my-app
+log->
+C:\Users\cusha\my-react-app>create-react-app my-app
+'create-react-app' is not recognized as an internal or external command,
+operable program or batch file.
+I am not able to start the next step because of these issues. I don't understand why npm is giving this issue is there any problem with my installation.
+
+ @Timer
+Collaborator
+Timer commented on Dec 13, 2017
+You probably don't have your node modules directory in your path. Does this work with npx?
+
+npx create-react-app my-app
+ @clintonmu
+clintonmu commented on Dec 14, 2017
+Thank you. Its working with npx
+
+I used:
+npm install -g create-react-app (in the client dir)>:
+create-react-app .

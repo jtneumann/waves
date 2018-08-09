@@ -766,6 +766,7 @@ footer .business_nfo .nfo {
 
 .user_container .user_left_nav {
     border-right: 1px solid #f8f8f8; 
+    padding-left: 10px;
 }
 
 .user_container .user_left_nav .links a {

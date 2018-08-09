@@ -79,9 +79,7 @@ class Login extends Component {
             this.setState({
                 formError: true
             })
-        }
-
-        
+        }      
     }
 
     render() {

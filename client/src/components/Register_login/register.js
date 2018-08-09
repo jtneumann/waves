@@ -94,10 +94,29 @@ class Register extends Component {
         }
     }
 
-    submitForm = () => {
-
+    updateForm = (element) => {
+        const newFormdata = update(element, this.state.formdata,'register');
+        this.setState({
+            formError: false,
+            formdata: newFormdata
+        })
     }
 
+    submitForm = (event) =>{
+        event.preventDefault();
+
+        let dataToSubmit = generateData(this.state.formdata, 'register');
+        let formIsValid = isFormValid(this.state.formdata, 'register');
+
+        if(formIsValid){
+            console.log(dataToSubmit);
+            
+        } else {
+            this.setState({
+                formError: true
+            })
+        }      
+    }
 
 
     render() {
@@ -124,6 +143,41 @@ class Register extends Component {
                                         />
                                         </div>
 
+                                    </div>
+                                    <div>
+                                    <FormField
+                                        id={'email'}
+                                        formdata={this.state.formdata.email}
+                                        change={(element)=> this.updateForm(element)}
+                                    />
+                                    </div>
+                                    <h2>Verify Password</h2>
+                                    <div className="form_block_two">
+                                    <div className="block">
+                                        <FormField
+                                            id={'password'}
+                                            formdata={this.state.formdata.password}
+                                            change={(element)=> this.updateForm(element)}
+                                        />
+                                        </div>
+                                        <div className="block">
+                                        <FormField
+                                            id={'confirmPassword'}
+                                            formdata={this.state.formdata.confirmPassword}
+                                            change={(element)=> this.updateForm(element)}
+                                        />
+                                        </div>
+                                    </div>
+                                    <div>
+                                    { this.state.formError ? 
+                                        <div className="error_label">
+                                            Please check your data
+                                        </div>
+                                        
+                                    :null}
+                                    <button onClick={(event)=> this.submitForm(event)}>
+                                        Create an Account
+                                    </button>
                                     </div>
                             </form>
                         </div>

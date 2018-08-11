@@ -33,9 +33,6 @@ export default function(ComposedClass,reload,adminRoute = null){
                     loading:false
                 })
             })
-
-
-
         }
 
 

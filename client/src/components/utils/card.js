@@ -23,7 +23,7 @@ class Card extends Component {
                 >
                 </div>
                 <div className="action_container">
-                    <div className="tages">
+                    <div className="tags">
                         <div className="brand">{props.brand.name}</div>
                         <div className="name">{props.name}</div>
                         <div className="price">{props.price}</div>
@@ -36,7 +36,7 @@ class Card extends Component {
                     :null
                 }
                 <div className="actions">
-                    <div className="button_wrap">
+                    <div className="button_wrapp">
                         <MyButton
                             type="default"
                             altClass="card_link"
@@ -47,7 +47,7 @@ class Card extends Component {
                             }}
                         />
                     </div>
-                    <div className="button_wrap">
+                    <div className="button_wrapp">
                         <MyButton
                             type="bag_link"
                             runAction={()=>{

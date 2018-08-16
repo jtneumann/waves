@@ -13,7 +13,7 @@ class AddProduct extends Component {
     state = {
         formError: false,
         formSuccess:false,
-        formData:{
+        formdata:{
             name:{
                 element: 'input',
                 value: '',

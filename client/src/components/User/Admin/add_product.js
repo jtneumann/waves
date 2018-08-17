@@ -54,7 +54,7 @@ class AddProduct extends Component {
                 value: '',
                 config:{
                     label: 'Product Price',
-                    name: 'name_input',
+                    name: 'price_input',
                     type: 'number',
                     placeholder: 'Enter the price'
                 },

@@ -4,11 +4,13 @@ import {
     GET_BRANDS,
     ADD_BRAND,
     GET_WOODS,
+    ADD_WOOD,
     GET_PRODUCTS_TO_SHOP,
     ADD_PRODUCT,
-    CLEAR_PRODUCT
+    CLEAR_PRODUCT,
+    GET_PRODUCT_DETAIL,
+    CLEAR_PRODUCT_DETAIL
 } from '../actions/types';
-import { stat } from 'fs';
 
 
 
@@ -25,6 +27,9 @@ export default function(state={},action){
                 brands: action.payload.brands}
         case GET_WOODS:
             return {...state, woods: action.payload }
+        case ADD_WOOD:
+            return {...state, addWood: action.payload.success,
+                woods: action.payload.woods}
         case GET_PRODUCTS_TO_SHOP:
             return {
                 ...state,
@@ -41,6 +46,10 @@ export default function(state={},action){
                 ...state,
                 addProduct: action.payload
             }
+        case GET_PRODUCT_DETAIL:
+            return {...state,prodDetail: action.payload}
+        case CLEAR_PRODUCT_DETAIL:
+            return {...state, prodDetail: action.payload}
         default:
             return state;
     }

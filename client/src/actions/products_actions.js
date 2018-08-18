@@ -5,13 +5,35 @@ import {
     GET_BRANDS,
     ADD_BRAND,
     GET_WOODS,
+    ADD_WOOD,
     GET_PRODUCTS_TO_SHOP,
     ADD_PRODUCT,
-    CLEAR_PRODUCT
+    CLEAR_PRODUCT,
+    GET_PRODUCT_DETAIL,
+    CLEAR_PRODUCT_DETAIL
 } from './types';
 
 import { PRODUCT_SERVER } from '../components/utils/misc';
 
+
+export function getProductDetail(id){
+    const request = axios.get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
+        .then(response => {
+            return response.data[0]
+        });
+
+    return {
+        type: GET_PRODUCT_DETAIL,
+        payload: request
+    }
+}
+
+export function clearProductDetail(){
+    return {
+        type: CLEAR_PRODUCT_DETAIL,
+        payload:''
+    }
+}
 
 export function getProductsBySell(){
     // ?sortBy=sold&order=desc&limit=4
@@ -117,3 +139,23 @@ export function getWoods(){
         payload: request
     }
 }
+
+export function addWood(datatoSubmit, existingWoods){
+    const request = axios.post(`${PRODUCT_SERVER}/wood`,datatoSubmit)
+        .then(response => {
+            let woods = [
+                ...existingWoods,
+                response.data.wood
+            ];
+            return{
+                success: response.data.success,
+                woods
+            }
+        });
+
+        return {
+            type: ADD_WOOD,
+            payload: request
+        }
+}
+

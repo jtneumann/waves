@@ -43,7 +43,7 @@ class ProdImg extends Component {
                     key={i}
                     onClick={()=> this.handleLightBox(0)}
                     className="thumb"
-                    style={{background: `url(${item}) no_repeat`}}
+                    style={{background: `url(${item}) no-repeat`}}
                 >
 
                 </div>
@@ -57,7 +57,7 @@ class ProdImg extends Component {
 
         return (
             <div className="product_image_container">
-                <div className="main pic">
+                <div className="main_pic">
                     <div
                         style={{background:`url(${this.renderCardImage(detail.images)}) no-repeat`}}
                         onClick={()=> this.handleLightBox(0)}

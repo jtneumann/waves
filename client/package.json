@@ -11,7 +11,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-dropzone": "^4.2.12",
-    "react-images": "^0.5.17",
+    "react-images": "^0.5.19",
     "react-moment": "^0.7.7",
     "react-paypal-express-checkout": "^1.0.4",
     "react-redux": "^5.0.7",
@@ -28,9 +28,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy":{
-    "/api/":{
-      "target":"http://localhost:3002"
+  "proxy": {
+    "/api/": {
+      "target": "http://localhost:3002"
     }
   }
 }

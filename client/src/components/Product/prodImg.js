@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImageLightbox from '../utils/lightbox';
 
 class ProdImg extends Component {
 
@@ -22,7 +23,35 @@ class ProdImg extends Component {
             })
         } 
     }
-    
+
+    handleLightBox = (pos) => {
+        if (this.state.lightboxImages.length > 0) {
+            this.setState({
+                lightbox: true,
+                imagePos: pos
+            })
+        }
+    }
+
+    handleLightBoxClose = () => {
+        this.setState({
+            lightbox: false
+        })
+    }
+
+    showThumbs = () => (
+        this.state.lightboxImages.map((item,i)=>(
+            i > 0 ?
+                <div
+                    key={i}
+                    onClick={()=> this.handleLightBox(i)}
+                    className="thumb"
+                    style={{background: `url(${item}) no-repeat`}}
+                >
+                </div>
+            :null
+        ))
+    )
 
     renderCardImage = (images) => {
         if (images.length > 0) {
@@ -32,29 +61,8 @@ class ProdImg extends Component {
         }
     }
 
-    handleLightBox = () => {
-
-    }
-
-    showThumbs = () => (
-        this.state.lightboxImages.map((item,i)=>(
-            i > 0 ?
-                <div
-                    key={i}
-                    onClick={()=> this.handleLightBox(0)}
-                    className="thumb"
-                    style={{background: `url(${item}) no-repeat`}}
-                >
-
-                </div>
-            :null
-        ))
-    )
-
-    render() {
-
+    render(){
         const {detail} = this.props;
-
         return (
             <div className="product_image_container">
                 <div className="main_pic">
@@ -68,6 +76,17 @@ class ProdImg extends Component {
                 <div className="main_thumbs">
                     { this.showThumbs(detail)}
                 </div>
+                {
+                    this.state.lightbox ?
+                        <ImageLightbox
+                            id={detail.id}
+                            images={this.state.lightboxImages}
+                            open={this.state.open}
+                            pos={this.state.imagePos}
+                            onclose={()=> this.handleLightBoxClose()}
+                        />
+                    :null
+                }
             </div>
         );
     }

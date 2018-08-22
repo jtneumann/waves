@@ -79,15 +79,18 @@ class UserCart extends Component {
     )
 
     transactionError = () => {
-
+        console.log('PayPal error')
     }
 
     transactionCancelled = () => {
-
+        console.log('Transaction Cancelled')
     }
 
-    transactionSuccess = () => {
-
+    transactionSuccess = (data) => {
+        this.setState({
+            showTotal: false,
+            showSuccess:true
+        })
     }
 
     render(){

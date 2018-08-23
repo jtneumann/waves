@@ -358,7 +358,7 @@ app.post('/api/users/successBuy',auth,(req,res)=>{
             id: item._id,
             price: item.price,
             quantity: item.quantity,
-            paymentId: req.body.paymentData.paymentId
+            paymentId: req.body.paymentData.paymentID
         })
     })
 
@@ -387,7 +387,7 @@ app.post('/api/users/successBuy',auth,(req,res)=>{
                     products.push({id:item.id,quantity:item.quantity})
                 })
 
-                async.eachOfSeries(products,(item,callback)=>{
+                async.eachSeries(products,(item,callback)=>{
                     Product.update(
                         {_id: item.id },
                         { $inc:{
@@ -397,7 +397,7 @@ app.post('/api/users/successBuy',auth,(req,res)=>{
                         callback
                     )
                 },(err)=>{
-                    if(err) return res.json({success:fales,err})
+                    if(err) return res.json({success:false,err})
                     res.status(200).json({
                         success:true,
                         cart: user.cart,

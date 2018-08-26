@@ -5,6 +5,8 @@ import { update, generateData, isFormValid, populateFields } from '../../utils/F
 
 import { connect } from 'react-redux';
 
+import { getSiteData } from '../../../actions/site_actions';
+
 class UpdateSiteNfo extends Component {
 
     state = {
@@ -107,6 +109,17 @@ class UpdateSiteNfo extends Component {
         }      
     }
 
+    componentDidMount() {
+        this.props.dispatch(getSiteData()).then(()=>{
+            console.log(this.props.site.siteData[0]);
+            const newFormdata = populateFields(this.state.formdata,this.props.site.siteData[0]);
+            this.setState({
+                formdata: newFormdata
+            })
+        })
+    }
+    
+
     render() {
         return (
             <div>
@@ -162,4 +175,4 @@ const mapStateToProps = (state) =>{
     }
 }
 
-export default connect()(UpdateSiteNfo);
+export default connect(mapStateToProps)(UpdateSiteNfo);

@@ -5,6 +5,7 @@ const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 
 
+
 const app = express();
 const mongoose = require('mongoose');
 const async = require('async');
@@ -36,6 +37,19 @@ const { Site } = require('./models/site');
 //Middlewares
 const { auth } = require('./middleware/auth');
 const { admin } = require('./middleware/admin');
+
+//UTILS
+const { sendEmail } = require('./utils/mail/index');
+
+//Ethereal try
+// const transporter = nodemailer.createTransport({
+//     host: 'smtp.ethereal.email',
+//     port: 587,
+//     auth: {
+//         user: 'ecyq66zoghc3fh7e@ethereal.email',
+//         pass: 'MkTb8Gs9gnakSxfnyY'
+//     }
+// });
 
 //=================
 // PRODUCTS
@@ -217,6 +231,7 @@ app.post('/api/users/register', (req, res) => {
 
     user.save((err, doc) => {
         if(err) return res.json({success: false, err});
+        sendEmail(doc.email,doc.name,null,"welcome");
         res.status(200).json({
             success: true,
             // userdata: doc

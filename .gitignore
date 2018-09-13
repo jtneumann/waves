@@ -1,6 +1,7 @@
 /node_modules
 /build
 /client/node_modules
+ethereal.js
 
 .DS_Store
 .env

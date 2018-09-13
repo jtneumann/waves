@@ -1,5 +1,5 @@
 const mailer = require('nodemailer');
-const { welcome } = require("/.welcome_template");
+const { welcome } = require("./welcome_template.js");
 require('dotenv').config();
 
 const getEmailData = (to,name,token,template) => {
@@ -8,7 +8,7 @@ const getEmailData = (to,name,token,template) => {
     switch(template){
         case "welcome":
             data = {
-                from:"Waves <waves.guitars.rev@gmail.com>",
+                from:"Waves <ecyq66zoghc3fh7e@ethereal.email>",
                 to,
                 subject:`Welcome to waves ${name}`,
                 html:welcome()
@@ -23,10 +23,11 @@ const getEmailData = (to,name,token,template) => {
 
 const sendEmail = (to,name,token,type) => {
 
-    const smtpTransport = mailer.createTransport({
-        service="Gmail",
+    const smtpTransport = nodemailer.createTransport({
+        host:'smtp.ethereal.email',
+        port: 587,
         auth:{
-            user: "waves.guitars.rev@gmail.com",
+            user: "ecyq66zoghc3fh7e@ethereal.email",
             pass: process.env.EMAIL_PASS
         }
     });
@@ -41,6 +42,18 @@ const sendEmail = (to,name,token,type) => {
         }
         smtpTransport.close();
     })
+    //.then(info=>{
+    //     console.log('Preview URL:' + nodemailer.getTestMessageUrl(info));
+    // }
+
+    // verify connection configuration
+    // smtpTransport.verify(function(error, success) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log('Server is ready to take our messages');
+    //     }
+    // });
     
 }
 

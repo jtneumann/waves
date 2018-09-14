@@ -56,6 +56,54 @@ const { sendEmail } = require('./utils/mail/index');
 //     }
 // });
 
+//////////////////////////////////////
+//  ADMIN UPLOADS
+/////////////////////////////////////
+
+const multer = require('multer');
+let storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'uploads/')
+    },
+    filename:(req,file,cb)=>{
+        cb(null,`${Date.now()}_${file.originalname}`)
+    }
+    // ,
+    // fileFilter:(req,file,cb)=>{
+    //     const ext = path.extname(file.originalname)
+    //     if (ex !== '.jpg' && ext !== '.png') {
+    //         return cb(res.status(400).end('Only jpg & png is allowed'),
+    //         false);
+    //     }
+    //     cb(null,true)
+    // }
+});
+const upload = multer({storage: storage}).single('file')
+
+app.post('/api/users/uploadfile',auth,admin,(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            return res.json({success:false,err})
+        }
+        return res.json({success:true})
+    })
+})
+
+const fs = require('fs');
+const path = require('path');
+
+app.get('/api/users/admin_files',auth,admin,(req,res)=>{
+    const dir = path.resolve(".")+'/uploads/';
+    fs.readdir(dir,(err,items)=>{
+        return res.status(200).send(items);
+    })
+})
+
+app.get('/api/users/download/:id',auth,admin,(req,res)=>{
+    const file = path.resolve(".")+`/uploads/${req.params.id}`;
+    res.download(file)
+})
+
 //=================
 // PRODUCTS
 //=================

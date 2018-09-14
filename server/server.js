@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 const SHA1 = require('crypto-js/sha1');
+const moment = require('moment');
 
 
 const app = express();
@@ -17,6 +18,8 @@ mongoose.connect(process.env.DATABASE);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.use(express.static('client/build'));
 
 cloudinary.config({
     cloud_name:process.env.CLOUD_NAME,
@@ -277,6 +280,31 @@ app.post('/api/users/reset_user',(req,res)=>{
             })
         }
     )
+})
+
+app.post('/api/users/reset_password',(req,res)=>{
+
+    var today = moment().startOf('day').valueOf();
+
+    User.findOne({
+        resetToken: req.body.resetToken,
+        resetTokenExp:{
+            $gte: today
+        }
+    },(err,user)=>{
+        if (!user) return res.json({success:false,message:'Sorry, token is too old. Please reques a new one to reset your password.'})
+
+        user.password = req.body.password;
+        user.resetToken = '';
+        user.resetTokenExp = '';
+
+        user.save((err,doc)=>{
+            if (err) return res.json({success:false,err});
+            return res.status(200).json({
+                success:true
+            })
+        })
+    })
 })
 
 app.get('/api/users/auth',auth, (req,res)=>{
@@ -544,6 +572,14 @@ app.post('/api/site/site_data',auth,admin,(req,res)=>{
         }
     )
 });
+
+//Default route for Heroku
+if (process.env.NODE_ENV === 'production') {
+    const path = require('path');
+    app.get('/*',(req,res)=>{
+        res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
+    })
+}
 
 const port = process.env.PORT || 3002;
 

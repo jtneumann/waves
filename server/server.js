@@ -266,6 +266,19 @@ app.get('/api/product/brands', (req,res)=>{
 // USERS
 //=================
 
+app.post('/api/users/reset_user',(req,res)=>{
+    User.findOne(
+        {'email':req.body.email},
+        (err,user)=>{
+            user.generateResetToke((err,user)=>{
+                if(err) return res.json({success:false,err});
+                sendEmail(user.email,user.name,null,"reset_password",user)
+                return res.json({success:true})
+            })
+        }
+    )
+})
+
 app.get('/api/users/auth',auth, (req,res)=>{
     res.status(200).json({
         isAdmin: req.user.role ===0 ? false : true,

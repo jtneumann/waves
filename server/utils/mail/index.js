@@ -1,5 +1,6 @@
 const mailer = require('nodemailer');
 const { welcome } = require("./welcome_template.js");
+const { purchase } = require("./purchase_template.js");
 require('dotenv').config();
 
 const getEmailData = (to,name,token,template) => {
@@ -14,6 +15,14 @@ const getEmailData = (to,name,token,template) => {
                 html:welcome()
             }
         break;
+        case "purchase":
+        data = {
+            from:"Waves <ecyq66zoghc3fh7e@ethereal.email>",
+            to,
+            subject:`Thank you for your order, ${name}!`,
+            html:purchase(actionData)
+        }
+    break;
         default:
             data;
     }
@@ -21,7 +30,7 @@ const getEmailData = (to,name,token,template) => {
     return data;
 }
 
-const sendEmail = (to,name,token,type) => {
+const sendEmail = (to,name,token,type, actionData = null) => {
 
     const smtpTransport = nodemailer.createTransport({
         host:'smtp.ethereal.email',
@@ -32,7 +41,7 @@ const sendEmail = (to,name,token,type) => {
         }
     });
 
-    const mail = getEmailData(to,name,token,type)
+    const mail = getEmailData(to,name,token,type, actionData)
 
     smtpTransport.sendMail(mail,function(error,response){
         if (error) {
